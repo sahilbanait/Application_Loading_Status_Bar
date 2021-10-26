@@ -9,6 +9,7 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.net.Uri
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 import kotlinx.android.synthetic.main.activity_main.*
@@ -23,6 +24,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var pendingIntent: PendingIntent
     private lateinit var action: NotificationCompat.Action
 
+    lateinit var loadingButton: LoadingButton
+    private var complete = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -30,9 +34,16 @@ class MainActivity : AppCompatActivity() {
 
         registerReceiver(receiver, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
 
+        loadingButton = findViewById(R.id.custom_button)
+
         custom_button.setOnClickListener {
+            Toast.makeText(this, "File is Downloading", Toast.LENGTH_LONG).show()
             download()
+//            complete = true
         }
+//        if (complete){
+//
+//        }
     }
 
     private val receiver = object : BroadcastReceiver() {
